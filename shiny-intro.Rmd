@@ -1,0 +1,86 @@
+---
+title: Quick Start to Shiny
+author: Thomas Reinholdsson
+date: March 22, 2005
+runtime: shiny
+output:
+  ioslides_presentation:
+    widescreen: true
+    smaller: true
+---
+
+## What is Shiny?
+
+*"[...] an R package that makes it easy to build interactive web applications (apps) straight from R."*
+
+<div class="columns-2">
+
+![](http://shiny.rstudio.com/gallery/images/thumbnails/bus-dashboard.png)
+![](http://shiny.rstudio.com/gallery/images/thumbnails/kmeans-example.png)
+
+</div>
+
+# Get Started! | RStudio's tutorial: http://shiny.rstudio.com/tutorial/
+
+# 1. Welcome to Shiny
+
+## Installation
+
+```{r, eval=F}
+install.packages("shiny")
+```
+
+### Load package and run example
+
+```{r, eval=F}
+library(shiny)
+runExample("01_hello")
+```
+
+## App Structure
+
+**ui.R**
+
+```{r, eval=F}
+shinyUI(bootstrapPage(
+  sliderInput("my_input", "Number of observations:", min = 1, max = 10, value = 1),
+  plotOutput("my_plot")
+))
+```
+
+**server.R**
+
+```{r, eval=F}
+shinyServer(function(input, output) {
+  output$my_plot <- renderPlot({
+    data <- head(cars, input$my_input)
+    plot(data, cex = 5, pch = 19, col = "steelblue2")
+  })
+})
+```
+
+## Results in:
+
+```{r, echo = FALSE}
+shinyApp(
+  ui = bootstrapPage(
+    sliderInput("my_input", "Number of observations:", min = 1, max = 10, value = 1),
+    plotOutput("my_plot")
+  ),
+  
+  server = function(input, output) {
+    output$my_plot <- renderPlot({
+      data <- head(cars, input$my_input)
+      plot(data, cex = 5, pch = 19, col = "steelblue2")
+    })
+  },
+  options = list(height = 500)
+)
+```
+
+
+## Running an App
+
+![](http://shiny.rstudio.com/tutorial/lesson1/images/run-app.png)
+
+
