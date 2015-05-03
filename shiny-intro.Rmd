@@ -5,8 +5,10 @@ date: March 22, 2005
 runtime: shiny
 output:
   ioslides_presentation:
+    css: custom.css
     widescreen: true
     smaller: true
+    self_contained: false
 ---
 
 ## What is Shiny?
@@ -20,9 +22,9 @@ output:
 
 </div>
 
-# Get Started! | RStudio's tutorial: http://shiny.rstudio.com/tutorial/
+# Summary of RStudio's Tutorial | http://shiny.rstudio.com/tutorial/
 
-# 1. Welcome to Shiny
+## Lesson 1 | Welcome to Shiny
 
 ## Installation
 
@@ -83,4 +85,14 @@ shinyApp(
 
 ![](http://shiny.rstudio.com/tutorial/lesson1/images/run-app.png)
 
+## Lesson 2 | Build a user-interface
 
+## Lesson 3 | Add control widgets
+
+## Lesson 4 | Display reactive output
+
+## Lesson 5 | Use R scripts and data
+
+## Lesson 6 | Use reactive expressions
+
+## Lesson 7 | Share your apps
