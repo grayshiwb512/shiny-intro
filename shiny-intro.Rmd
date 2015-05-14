@@ -87,14 +87,174 @@ shinyApp(
 
 ## Lesson 2 | Build a user-interface
 
+## App Layout
+
+The layout of the app is defined within the `ui.R` script.
+
+Example:
+
+```{r eval=F}
+# ui.R
+shinyUI(fluidPage(
+  titlePanel("title panel"),
+
+  sidebarLayout(
+    sidebarPanel("sidebar panel"),
+    mainPanel("main panel")
+  )
+))
+```
+
+```{r, echo = F}
+shinyApp(
+    ui = fluidPage(
+    titlePanel("title panel"),
+    sidebarLayout(
+      sidebarPanel("sidebar panel"),
+      mainPanel("main panel")
+    )
+  ),
+  server = function(input, output) {}
+)
+```
+
+## 
+
+It also support some common `HTML` tags.
+
+```{r, eval=F}
+> library(shiny)
+> h1("My title")
+<h1>My title</h1>
+```
+
+Example:
+
+```{r eval=F}
+# ui.R
+shinyUI(bootstrapPage(
+  h1("title panel"),
+  em("Code example:"),
+  code("x = 1 + 2")
+))
+```
+
+```{r, echo = F}
+shinyApp(
+    ui = bootstrapPage(
+    h1("title panel"),
+    em("Code example:"),
+    code("x = 1 + 2")
+  ),
+  server = function(input, output) { }
+)
+```
+
 ## Lesson 3 | Add control widgets
+
+##
+
+```{r eval=F}
+# ui.R
+shinyUI(bootstrapPage(
+  selectInput("fruit", "Fruit:", c('apples', 'oranges')),
+  radioButtons("currency", "Currency:", c("SEK", "Euro", "Dollar"))
+))
+```
+
+```{r, echo = F}
+shinyApp(
+    ui = bootstrapPage(
+    selectInput("fruit", "Fruit:", c("apples", "oranges")),
+    radioButtons("currency", "Currency:", c("SEK", "Euro", "Dollar"))
+  ),
+  server = function(input, output) {}
+)
+```
 
 ## Lesson 4 | Display reactive output
 
-## Lesson 5 | Use R scripts and data
+##
 
-## Lesson 6 | Use reactive expressions
+```{r eval=F}
+# ui.R
+shinyUI(bootstrapPage(
+  selectInput("fruit", "Fruit:", c('apples', 'oranges')),
+  textOutput("mytext")
+))
 
-## Lesson 7 | Share your apps
+# server.R
+shinyServer(function(input, output) {
+  output$mytext <- renderText({ 
+    paste("You have selected", input$fruit)
+  })
+})
+```
+
+```{r, echo = F}
+shinyApp(
+  ui = bootstrapPage(
+    selectInput("fruit", "Fruit:", c('apples', 'oranges')),
+    textOutput("mytext")
+  ),
+  server = function(input, output) {
+    output$mytext <- renderText({ 
+      paste("You have selected", input$fruit)
+    })
+})
+```
+
+##
+
+<div class="columns-2">
+
+**ui.R** output functions:
+
+- `htmlOutput`: raw HTML
+- `imageOutput`: image
+- `plotOutput`: plot
+- `tableOutput`: table
+- `textOutput`: text
+- `uiOutput`: raw HTML
+- `verbatimTextOutput`: text
+
+**server.R** render functions:
+
+- `renderImage`: images
+- `renderPlot`: plots
+- `renderPrint`: any printed output
+- `renderTable`: data frame, matrix, etc.
+- `renderText`: character strings
+- `renderUI`: a Shiny tag object or HTML
+
+</div>
+
+## See also
+
+- Lesson 5 | Use R scripts and data
+
+- Lesson 6 | Use reactive expressions
+
+- Lesson 7 | Share your apps
 
 ## htmlwidgets for R
+
+http://www.htmlwidgets.org
+
+##
+
+```{r}
+library(leaflet)
+m = leaflet() %>% addTiles()
+m = m %>% setView(-93.65, 42.0285, zoom = 17)
+m %>% addPopups(-93.65, 42.0285, 'Here is the <b>Department of Statistics</b>, ISU')
+```
+
+##
+
+```{r,warning=F,message=F}
+library(metricsgraphics)
+mjs_plot(mtcars, x=wt, y=mpg) %>%
+  mjs_point(color_accessor=carb, size_accessor=carb) %>%
+  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+```
