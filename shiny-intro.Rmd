@@ -96,3 +96,5 @@ shinyApp(
 ## Lesson 6 | Use reactive expressions
 
 ## Lesson 7 | Share your apps
+
+## htmlwidgets for R
